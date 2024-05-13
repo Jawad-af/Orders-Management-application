@@ -13,17 +13,22 @@ import static org.ordersmgmtapp.dbconnection.DatabaseConnectionManager.connectio
 public class ClientDAO implements ClientDAORepo{
 
     @Override
-    public void add(Client client) throws SQLException {
+    public void add(Client client) {
         String INSERT_CLIENT_SQL = "INSERT INTO client(name, age) VALUES (?, ?);";
-        PreparedStatement preparedStatement = connection.prepareStatement(INSERT_CLIENT_SQL);
-        preparedStatement.setString(1, client.getName());
-        preparedStatement.setInt(2, client.getAge());
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = connection.prepareStatement(INSERT_CLIENT_SQL);
+            preparedStatement.setString(1, client.getName());
+            preparedStatement.setInt(2, client.getAge());
 
-        int affectedRows = preparedStatement.executeUpdate();
-        if (affectedRows > 0) {
-            System.out.println("Client added successfully.");
-        } else {
-            System.out.println("Failed to add the client " + client.getName());
+            int affectedRows = preparedStatement.executeUpdate();
+            if (affectedRows > 0) {
+                System.out.println("Client added successfully.");
+            } else {
+                System.out.println("Failed to add the client " + client.getName());
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -46,50 +51,64 @@ public class ClientDAO implements ClientDAORepo{
     }
 
     @Override
-    public void update(Client client) throws SQLException {
+    public void update(Client client)  {
         String UPDATE_CLIENT = "UPDATE client SET name = ?, age = ? WHERE id = ?";
-        PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_CLIENT);
-        preparedStatement.setString(1, client.getName());
-        preparedStatement.setInt(2, client.getAge());
-        preparedStatement.setLong(3, client.getId());
-        int rowsUpdated = preparedStatement.executeUpdate();
-        if (rowsUpdated > 0) {
-            System.out.println("Client updated successfully.");
-        } else {
-            System.out.println("Failed to update the client " + client.getId());
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_CLIENT);
+            preparedStatement.setString(1, client.getName());
+            preparedStatement.setInt(2, client.getAge());
+            preparedStatement.setLong(3, client.getId());
+            int rowsUpdated = preparedStatement.executeUpdate();
+            if (rowsUpdated > 0) {
+                System.out.println("Client updated successfully.");
+            } else {
+                System.out.println("Failed to update the client " + client.getId());
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
     @Override
-    public List<Client> getAll() throws SQLException {
+    public List<Client> getAll() {
         List<Client> clients = new ArrayList<>();
         String RETRIEVE_ALL_CLIENTS = "SELECT * FROM client;";
-        PreparedStatement preparedStatement = connection.prepareStatement(RETRIEVE_ALL_CLIENTS);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        while (resultSet.next()) {
-            long id = resultSet.getLong("id");
-            String name = resultSet.getString("name");
-            int age = resultSet.getInt("age");
-            Client client = new Client(id, name, age);
-            clients.add(client);
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = connection.prepareStatement(RETRIEVE_ALL_CLIENTS);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                long id = resultSet.getLong("id");
+                String name = resultSet.getString("name");
+                int age = resultSet.getInt("age");
+                Client client = new Client(id, name, age);
+                clients.add(client);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
         return clients;
     }
 
     @Override
-    public Client getClientById(long id) throws SQLException {
+    public Client getClientById(long id) {
         Client client = new Client();
         String RETRIEVE_CLIENT_BY_ID = "SELECT * FROM CLIENT WHERE CLIENT.ID = ?";
-        PreparedStatement preparedStatement = connection.prepareStatement(RETRIEVE_CLIENT_BY_ID);
-        preparedStatement.setLong(1, id);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        if (resultSet.next()) {
-            long clientId = resultSet.getLong("id");
-            String clientName = resultSet.getString("name");
-            int clientAge = resultSet.getInt("age");
-            client.setId(clientId);
-            client.setName(clientName);
-            client.setAge(clientAge);
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = connection.prepareStatement(RETRIEVE_CLIENT_BY_ID);
+            preparedStatement.setLong(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                long clientId = resultSet.getLong("id");
+                String clientName = resultSet.getString("name");
+                int clientAge = resultSet.getInt("age");
+                client.setId(clientId);
+                client.setName(clientName);
+                client.setAge(clientAge);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
         return client;
     }

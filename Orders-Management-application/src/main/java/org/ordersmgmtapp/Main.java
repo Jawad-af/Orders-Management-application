@@ -1,7 +1,7 @@
 package org.ordersmgmtapp;
 
 import org.ordersmgmtapp.dbconnection.DatabaseConnectionManager;
-import org.ordersmgmtapp.ui.MainFrame;
+import org.ordersmgmtapp.ui.main.MainFrame;
 
 import javax.swing.*;
 

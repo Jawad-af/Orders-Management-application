@@ -1,4 +1,4 @@
-package org.ordersmgmtapp.ui.client;
+package org.ordersmgmtapp.ui.models.client;
 
 import org.ordersmgmtapp.dao.ClientDAO;
 import org.ordersmgmtapp.model.Client;
@@ -7,7 +7,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
 
 public class ModifyClient extends JFrame {
 
@@ -35,11 +34,7 @@ public class ModifyClient extends JFrame {
                 long clientId = Long.parseLong(id.getText());
                 ClientDAO clientDAO = new ClientDAO();
                 Client client;
-                try {
-                    client = clientDAO.getClientById(clientId);
-                } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
-                }
+                client = clientDAO.getClientById(clientId);
 
                 JTextField nameField, ageField;
                 JButton saveButton;
@@ -67,11 +62,7 @@ public class ModifyClient extends JFrame {
                         // Update the client in the database
                         client.setName(updatedName);
                         client.setAge(updatedAge);
-                        try {
-                            clientDAO.update(client);
-                        } catch (SQLException ex) {
-                            throw new RuntimeException(ex);
-                        }
+                        clientDAO.update(client);
                         JOptionPane.showMessageDialog(ModifyClient.this, "Client updated successfully!");
                     }
                 });

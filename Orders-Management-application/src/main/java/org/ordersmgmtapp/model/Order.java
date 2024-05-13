@@ -1,70 +1,62 @@
 package org.ordersmgmtapp.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDateTime;
 
-public class Order {
-    private static long orderId = 0;
-    private static long id;
-    private Client client;
-    private List<Product> products;
-    private double totalPrice = 0;
+    public class Order {
+        private static long orderId = 0;
+        private long id;
+        private long clientId;
+        private String productId;
+        private int quantity;
+        private LocalDateTime orderDate;
 
-    public Order(Client client) {
-        this.id = ++orderId;
-        this.client = client;
-        this.products = new ArrayList<>();
-    }
-
-    public void calculateTotalPrice() {
-        if(products == null)
-            return;
-
-        int sum = 0;
-        for (Product product : products) {
-            sum += product.getPrice();
+        // Constructor
+        public Order(long clientId, String productId, int quantity) {
+            this.clientId = clientId;
+            this.productId = productId;
+            this.quantity = quantity;
+            this.orderDate = LocalDateTime.now(); // Set the order date to the current date and time
         }
-        totalPrice = sum;
-    }
 
-    public static long getId() {
-        return id;
-    }
+        // Getters and setters
+        public long getId() {
+            return id;
+        }
 
-    public static void setId(long id) {
-        Order.id = id;
-    }
+        public long getClientId() {
+            return clientId;
+        }
 
-    public Client getClient() {
-        return client;
-    }
+        public void setClientId(long clientId) {
+            this.clientId = clientId;
+        }
 
-    public void setClient(Client client) {
-        this.client = client;
-    }
+        public String getProductId() {
+            return productId;
+        }
 
-    public List<Product> getProducts() {
-        return products;
-    }
+        public void setProductId(String productId) {
+            this.productId = productId;
+        }
 
-    public void setProducts(List<Product> products) {
-        this.products = products;
-    }
+        public int getQuantity() {
+            return quantity;
+        }
 
-    public double getTotalPrice() {
-        return totalPrice;
-    }
+        public void setQuantity(int quantity) {
+            this.quantity = quantity;
+        }
 
-    public void setTotalPrice(double totalPrice) {
-        this.totalPrice = totalPrice;
-    }
+        public LocalDateTime getOrderDate() {
+            return orderDate;
+        }
 
-    @Override
-    public String toString() {
-        return '{' +
-                "client=" + client +
-                ", products=" + products +
-                ", totalPrice=" + totalPrice +
-                '}';
-    }
+        @Override
+        public String toString() {
+            return "id:  " + id +
+                    "  |  clientId=" + clientId +
+                    "  |  productId=" + productId +
+                    "  |  quantity=" + quantity +
+                    "  |  Date=" + orderDate;
+        }
 }

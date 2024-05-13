@@ -1,18 +1,17 @@
-package org.ordersmgmtapp.ui.client;
+package org.ordersmgmtapp.ui.models.client;
 
 import org.ordersmgmtapp.controller.ClientController;
 
 import javax.swing.*;
-import java.awt.*;
 import java.sql.SQLException;
 
-public class ClientInfo extends JFrame {
+public class AddClient extends JFrame {
 
     private ClientController controller = new ClientController();
     private JTextField name, age;
     private JButton addButton;
 
-    public ClientInfo() {
+    public AddClient() {
         setTitle("Add New Client");
         setSize(500, 500);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -36,7 +35,7 @@ public class ClientInfo extends JFrame {
         addButton.addActionListener(e -> {
             try {
                 addClient();
-                JOptionPane.showMessageDialog(ClientInfo.this, "Client added successfully!");
+                JOptionPane.showMessageDialog(AddClient.this, "Client added successfully!");
             } catch (SQLException ex) {
                 throw new RuntimeException(ex);
             }
@@ -49,5 +48,4 @@ public class ClientInfo extends JFrame {
         int clientAge = Integer.parseInt(age.getText());
         controller.addClient(clientName, clientAge);
     }
-
 }

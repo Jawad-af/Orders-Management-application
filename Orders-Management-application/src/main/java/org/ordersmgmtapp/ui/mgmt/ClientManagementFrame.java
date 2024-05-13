@@ -1,20 +1,22 @@
-package org.ordersmgmtapp.ui;
-import org.ordersmgmtapp.controller.ClientController;
-import org.ordersmgmtapp.model.Client;
-import org.ordersmgmtapp.ui.client.ClientInfo;
-import org.ordersmgmtapp.ui.client.DeleteClient;
-import org.ordersmgmtapp.ui.client.ModifyClient;
+package org.ordersmgmtapp.ui.mgmt;
 
-import java.util.List;
+import org.ordersmgmtapp.model.Client;
+import org.ordersmgmtapp.ui.models.client.AddClient;
+import org.ordersmgmtapp.ui.models.client.DeleteClient;
+import org.ordersmgmtapp.ui.models.client.ModifyClient;
 
 import javax.swing.*;
-        import java.awt.*;
+import javax.swing.table.DefaultTableModel;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.reflect.Field;
+import java.util.List;
 
 public class ClientManagementFrame extends JFrame {
-    private JList<String> clientList;
+    private JTable clientTable;
     private JButton addClientButton, modifyClientButton, deleteClientButton;
+
     public ClientManagementFrame() {
         setTitle("Client Management");
         setSize(400, 300);
@@ -29,10 +31,8 @@ public class ClientManagementFrame extends JFrame {
         buttons.add(modifyClientButton);
         buttons.add(deleteClientButton);
 
-        JPanel clientsPanel = new JPanel(new BorderLayout());
-        clientList = new JList<>();
-        JScrollPane scrollPane = new JScrollPane(clientList);
-        clientsPanel.add(scrollPane, BorderLayout.CENTER);
+        clientTable = new JTable();
+        JScrollPane scrollPane = new JScrollPane(clientTable);
 
         add(buttons, BorderLayout.NORTH);
         add(scrollPane, BorderLayout.CENTER);
@@ -40,7 +40,7 @@ public class ClientManagementFrame extends JFrame {
         addClientButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ClientInfo clientInfo = new ClientInfo();
+                AddClient clientInfo = new AddClient();
                 clientInfo.setVisible(true);
             }
         });
@@ -62,14 +62,29 @@ public class ClientManagementFrame extends JFrame {
         });
     }
 
-    // Method to update client list
     public void updateClientList(List<Client> clients) {
-        String[] currentClients = new String[clients.size()];
-        int i = 0;
-        for (Client client : clients) {
-            currentClients[i] = client.toString();
-            i++;
+        Class<Client> clientClass = Client.class;
+        Field[] clientFields = clientClass.getDeclaredFields();
+        try {
+            Field clientIdField = clientClass.getDeclaredField("id");
+            Field clientNameField = clientClass.getDeclaredField("name");
+            Field clientAgeField = clientClass.getDeclaredField("age");
+            clientIdField.setAccessible(true);
+            clientNameField.setAccessible(true);
+            clientAgeField.setAccessible(true);
+            String[] columnNames = {clientIdField.getName(), clientNameField.getName(), clientAgeField.getName()};
+            Object[][] data = new Object[clients.size()][columnNames.length];
+            for (int i = 0; i < clients.size(); i++) {
+                Client client = clients.get(i);
+                data[i][0] = clientIdField.get(client);
+                data[i][1] = clientNameField.get(client);
+                data[i][2] = clientAgeField.get(client);
+            }
+            DefaultTableModel model = new DefaultTableModel(data, columnNames);
+            clientTable.setModel(model);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            throw new RuntimeException(e);
         }
-        clientList.setListData(currentClients);
     }
+
 }

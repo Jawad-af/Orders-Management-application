@@ -24,5 +24,7 @@ CREATE TABLE `product` (
         `id` bigint AUTO_INCREMENT PRIMARY KEY,
         `name` varchar(50) NOT NULL,
         `description` varchar(1024) NOT NULL,
-        `price` double NOT NULL
+        `price` double NOT NULL,
+        `stock_quantity` INT NOT NULL DEFAULT 0
 );
+

@@ -1,24 +1,31 @@
 package org.ordersmgmtapp.model;
 
 public class Product {
-    private static long code = 0;
-    private static String id;
+    private long id;
     private String name;
     private String description;
     private double price;
-    public Product(String name, String description, double price) {
-        this.id = "COD00" + ++code;
+    private int stockQuantity;
+
+    public Product(){}
+
+    public Product(long id, String name, String description, double price, int stockQuantity) {
+        this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
+        this.stockQuantity = stockQuantity;
     }
 
-    public static long getCode() {
-        return code;
+    public Product(String name, String description, double price, int stockQuantity) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.stockQuantity = stockQuantity;
     }
 
-    public static void setCode(long code) {
-        Product.code = code;
+    public long getId() {
+        return id;
     }
 
     public String getName() {
@@ -45,12 +52,20 @@ public class Product {
         this.price = price;
     }
 
+    public int getStockQuantity() {
+        return stockQuantity;
+    }
+
+    public void setStockQuantity(int stockQuantity) {
+        this.stockQuantity = stockQuantity;
+    }
+
     @Override
     public String toString() {
-        return '{' +
-                "name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", price=" + price +
-                '}';
+        return  "id:  " + id +
+                "  |  name:  " + name +
+                "  |  description:  " + description +
+                "  |  price:  " + price +
+                "  |  stock:  " + stockQuantity;
     }
 }

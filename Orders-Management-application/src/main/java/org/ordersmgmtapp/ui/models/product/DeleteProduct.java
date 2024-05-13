@@ -1,19 +1,19 @@
-package org.ordersmgmtapp.ui.client;
+package org.ordersmgmtapp.ui.models.product;
 
-import org.ordersmgmtapp.dao.ClientDAO;
+import org.ordersmgmtapp.dao.ProductDAO;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
 
-public class DeleteClient extends JFrame {
+public class DeleteProduct extends JFrame {
+
     private JTextField id;
     private JButton delete;
 
-    public DeleteClient() {
-        setTitle("Delete Client");
+    public DeleteProduct() {
+        setTitle("Delete Product");
         setSize(500, 200);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
@@ -21,19 +21,19 @@ public class DeleteClient extends JFrame {
         mainPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 
         id = new JTextField(10);
-        delete = new JButton("Delete Client");
+        delete = new JButton("Delete Product");
 
-        mainPanel.add(new JLabel("Client ID: "));
+        mainPanel.add(new JLabel("Product ID: "));
         mainPanel.add(id);
         mainPanel.add(delete);
 
         delete.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                long clientId = Long.parseLong(id.getText());
-                ClientDAO clientDAO = new ClientDAO();
-                clientDAO.delete(clientId);
-                JOptionPane.showMessageDialog(DeleteClient.this, "Client deleted successfully!");
+                String productId = id.getText();
+                ProductDAO productDAO = new ProductDAO();
+                productDAO.deleteProduct(productId);
+                JOptionPane.showMessageDialog(DeleteProduct.this, "Product deleted successfully!");
             }
         });
 
@@ -42,6 +42,6 @@ public class DeleteClient extends JFrame {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new DeleteClient());
+        SwingUtilities.invokeLater(() -> new DeleteProduct());
     }
 }
