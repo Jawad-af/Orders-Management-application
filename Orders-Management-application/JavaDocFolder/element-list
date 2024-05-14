@@ -1,0 +1,11 @@
+org.ordersmgmtapp.apprunner
+org.ordersmgmtapp.constants
+org.ordersmgmtapp.controller
+org.ordersmgmtapp.dao
+org.ordersmgmtapp.databaseobjects
+org.ordersmgmtapp.genericdao
+org.ordersmgmtapp.model
+org.ordersmgmtapp.ui.main
+org.ordersmgmtapp.ui.mgmt
+org.ordersmgmtapp.ui.models.client
+org.ordersmgmtapp.ui.models.product
