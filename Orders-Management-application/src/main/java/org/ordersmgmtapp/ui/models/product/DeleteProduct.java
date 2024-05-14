@@ -1,6 +1,6 @@
 package org.ordersmgmtapp.ui.models.product;
 
-import org.ordersmgmtapp.dao.ProductDAO;
+import org.ordersmgmtapp.controller.ProductController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -30,9 +30,9 @@ public class DeleteProduct extends JFrame {
         delete.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String productId = id.getText();
-                ProductDAO productDAO = new ProductDAO();
-                productDAO.deleteProduct(productId);
+                long productId = Long.parseLong(id.getText());
+                ProductController controller = new ProductController();
+                controller.deleteProduct(productId);
                 JOptionPane.showMessageDialog(DeleteProduct.this, "Product deleted successfully!");
             }
         });

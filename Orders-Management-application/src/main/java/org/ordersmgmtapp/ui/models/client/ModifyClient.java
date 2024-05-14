@@ -1,5 +1,6 @@
 package org.ordersmgmtapp.ui.models.client;
 
+import org.ordersmgmtapp.controller.ClientController;
 import org.ordersmgmtapp.dao.ClientDAO;
 import org.ordersmgmtapp.model.Client;
 
@@ -32,9 +33,9 @@ public class ModifyClient extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 long clientId = Long.parseLong(id.getText());
-                ClientDAO clientDAO = new ClientDAO();
+                ClientController controller = new ClientController();
                 Client client;
-                client = clientDAO.getClientById(clientId);
+                client = controller.getClientById(clientId);
 
                 JTextField nameField, ageField;
                 JButton saveButton;
@@ -62,7 +63,7 @@ public class ModifyClient extends JFrame {
                         // Update the client in the database
                         client.setName(updatedName);
                         client.setAge(updatedAge);
-                        clientDAO.update(client);
+                        controller.updateClient(client);
                         JOptionPane.showMessageDialog(ModifyClient.this, "Client updated successfully!");
                     }
                 });

@@ -1,5 +1,6 @@
 package org.ordersmgmtapp.ui.models.client;
 
+import org.ordersmgmtapp.controller.ClientController;
 import org.ordersmgmtapp.dao.ClientDAO;
 
 import javax.swing.*;
@@ -30,8 +31,8 @@ public class DeleteClient extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 long clientId = Long.parseLong(id.getText());
-                ClientDAO clientDAO = new ClientDAO();
-                clientDAO.delete(clientId);
+                ClientController controller = new ClientController();
+                controller.deleteClient(clientId);
                 JOptionPane.showMessageDialog(DeleteClient.this, "Client deleted successfully!");
             }
         });

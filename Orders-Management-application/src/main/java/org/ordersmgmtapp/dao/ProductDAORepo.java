@@ -10,9 +10,9 @@ public interface ProductDAORepo {
 
     void modifyProduct(Product product);
 
-    void deleteProduct(String id);
+    void deleteProduct(long id);
 
-    Product getProductById(String id);
+    Product getProductById(long id);
 
     List<Product> getAllProducts();
 

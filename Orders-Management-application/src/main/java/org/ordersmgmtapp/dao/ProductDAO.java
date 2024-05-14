@@ -54,11 +54,11 @@ public class ProductDAO implements ProductDAORepo{
     }
 
     @Override
-    public void deleteProduct(String id) {
+    public void deleteProduct(long id) {
         String DELETE_PRODUCT = "DELETE FROM product WHERE id = ?";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_PRODUCT);
-            preparedStatement.setString(1, id);
+            preparedStatement.setLong(1, id);
             int rows = preparedStatement.executeUpdate();
             if (rows > 0) {
                 System.out.println("Product " + id + " has been deleted successfully");
@@ -71,11 +71,11 @@ public class ProductDAO implements ProductDAORepo{
     }
 
     @Override
-    public Product getProductById(String productId) {
+    public Product getProductById(long productId) {
         String RETRIEVE_CLIENT_BY_ID = "SELECT * FROM product WHERE id = ?";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(RETRIEVE_CLIENT_BY_ID);
-            preparedStatement.setString(1, productId);
+            preparedStatement.setLong(1, productId);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 long id = resultSet.getLong("id");

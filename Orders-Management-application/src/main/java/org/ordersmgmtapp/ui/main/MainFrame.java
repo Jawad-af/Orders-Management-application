@@ -83,7 +83,7 @@ public class MainFrame extends JFrame {
     private void updateProductList(ProductManagementFrame productFrame) {
         // Fetch clients from the database and update the client list in ClientManagementFrame
         ProductController controller = new ProductController();
-        List<Product> productList = controller.getAllproducts();
+        List<Product> productList = controller.getAllProducts();
         productFrame.updateProductList(productList);
     }
 

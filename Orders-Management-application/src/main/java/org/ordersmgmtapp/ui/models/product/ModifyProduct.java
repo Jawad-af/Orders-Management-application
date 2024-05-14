@@ -1,5 +1,6 @@
 package org.ordersmgmtapp.ui.models.product;
 
+import org.ordersmgmtapp.controller.ProductController;
 import org.ordersmgmtapp.dao.ProductDAO;
 import org.ordersmgmtapp.model.Product;
 
@@ -31,10 +32,11 @@ public class ModifyProduct extends JFrame {
         modify.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String productId = id.getText();
+                long productId = Long.parseLong(id.getText());
                 ProductDAO productDAO = new ProductDAO();
+                ProductController controller = new ProductController();
                 Product product;
-                product = productDAO.getProductById(productId);
+                product = controller.getProductById(productId);
 
                 JTextField nameField, descriptionField, priceField;
                 JButton saveButton;
@@ -66,7 +68,7 @@ public class ModifyProduct extends JFrame {
                         product.setName(updatedName);
                         product.setDescription(updatedDescription);
                         product.setPrice(updatedPrice);
-                        productDAO.modifyProduct(product);
+                        controller.updateProduct(product);
                         JOptionPane.showMessageDialog(ModifyProduct.this, "Product updated successfully!");
                     }
                 });
