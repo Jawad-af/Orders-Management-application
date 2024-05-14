@@ -5,12 +5,18 @@ import org.ordersmgmtapp.controller.ClientController;
 import javax.swing.*;
 import java.sql.SQLException;
 
+/**
+ * The AddClient class represents the UI for adding a new client.
+ */
 public class AddClient extends JFrame {
 
     private ClientController controller = new ClientController();
     private JTextField name, age;
     private JButton addButton;
 
+    /**
+     * Constructs a new AddClient object.
+     */
     public AddClient() {
         setTitle("Add New Client");
         setSize(500, 500);
@@ -43,6 +49,11 @@ public class AddClient extends JFrame {
 
         add(panel);
     }
+
+    /**
+     * Adds a new client.
+     * @throws SQLException if an SQL exception occurs
+     */
     private void addClient() throws SQLException {
         String clientName = name.getText();
         int clientAge = Integer.parseInt(age.getText());

@@ -4,7 +4,6 @@ import org.ordersmgmtapp.controller.OrderController;
 import org.ordersmgmtapp.dao.*;
 import org.ordersmgmtapp.model.Client;
 import org.ordersmgmtapp.model.Product;
-import org.ordersmgmtapp.ui.models.product.AddProduct;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,6 +12,9 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.List;
 
+/**
+ * The OrderManagementFrame class represents the user interface for creating product orders.
+ */
 public class OrderManagementFrame extends JFrame {
 
     private JComboBox<Product> productComboBox;
@@ -21,6 +23,9 @@ public class OrderManagementFrame extends JFrame {
     private JButton createOrderButton;
     private JLabel statusLabel;
 
+    /**
+     * Constructs a new OrderManagementFrame object.
+     */
     public OrderManagementFrame() {
         setTitle("Create Product Order");
         setSize(800, 600);
@@ -35,7 +40,6 @@ public class OrderManagementFrame extends JFrame {
         createOrderButton = new JButton("Create Order");
         statusLabel = new JLabel();
 
-        // Retrieve existing products and clients from the database and populate the combo boxes
         loadProducts();
         loadClients();
 
@@ -62,16 +66,12 @@ public class OrderManagementFrame extends JFrame {
                         statusLabel.setText("Under-stock: Not enough products available.");
                     } else {
                         try {
-                            // Insert order into database
                             createOrder(selectedProduct, selectedClient, quantity);
-                            // Decrement product stock
                             decrementStock(selectedProduct, quantity);
                             statusLabel.setText("Order created successfully.");
-                    // Check if there are enough products in stock
                         } catch (SQLException ex) {
                             statusLabel.setText("Failed to create order: " + ex.getMessage());
                         }
-                        // Insert order into the database and decrement product stock
                     }
                 }
             }
@@ -81,8 +81,10 @@ public class OrderManagementFrame extends JFrame {
         setVisible(true);
     }
 
+    /**
+     * Loads products from the database and populates the product combo box.
+     */
     private void loadProducts() {
-        // Retrieve existing products from the database and populate the product combo box
         ProductDAO productDAO = new ProductDAO();
         List<Product> productList = productDAO.getAllProducts();
         for (Product product : productList) {
@@ -90,8 +92,10 @@ public class OrderManagementFrame extends JFrame {
         }
     }
 
+    /**
+     * Loads clients from the database and populates the client combo box.
+     */
     private void loadClients() {
-        // Retrieve existing clients from the database and populate the client combo box
         ClientDAO clientDAO = new ClientDAO();
         List<Client> clientList = clientDAO.getAll();
         for (Client client : clientList) {
@@ -99,15 +103,25 @@ public class OrderManagementFrame extends JFrame {
         }
     }
 
+    /**
+     * Creates a new order in the database.
+     * @param product The selected product.
+     * @param client The selected client.
+     * @param quantity The quantity of the product.
+     * @throws SQLException If an SQL exception occurs.
+     */
     private void createOrder(Product product, Client client, int quantity) throws SQLException {
-        // Insert order into the database
         OrderController controller = new OrderController();
         controller.addOrder(client.getId(), product.getId(), quantity);
     }
 
+    /**
+     * Decrements the stock quantity of a product in the database.
+     * @param product The selected product.
+     * @param quantity The quantity to decrement.
+     * @throws SQLException If an SQL exception occurs.
+     */
     private void decrementStock(Product product, int quantity) throws SQLException {
-        // Decrement product stock in the database
-        // We should update the stock quantity for the selected product in the product table
         ProductDAORepo productDAO = new ProductDAO();
         productDAO.decrementStock(product, quantity);
     }

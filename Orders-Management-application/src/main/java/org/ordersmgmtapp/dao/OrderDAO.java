@@ -3,10 +3,20 @@ package org.ordersmgmtapp.dao;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import static org.ordersmgmtapp.dbconnection.DatabaseConnectionManager.connection;
+import static org.ordersmgmtapp.databaseobjects.DatabaseConnectionManager.connection;
 
+/**
+ * The OrderDAO class provides methods for interacting with order data in the database.
+ */
 public class OrderDAO implements OrderDAORepo {
 
+    /**
+     * Adds a new order to the database.
+     *
+     * @param clientId  The ID of the client placing the order.
+     * @param productId The ID of the product being ordered.
+     * @param quantity  The quantity of the product being ordered.
+     */
     @Override
     public void addOrder(long clientId, long productId, int quantity) {
         String ADD_ORDER = "INSERT INTO `order`(client_id, product_id, quantity) VALUES(?, ?, ?)";

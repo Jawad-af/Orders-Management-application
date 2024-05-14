@@ -7,11 +7,17 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * The DeleteProduct class represents the UI for deleting a product.
+ */
 public class DeleteProduct extends JFrame {
 
     private JTextField id;
     private JButton delete;
 
+    /**
+     * Constructs a new DeleteProduct object.
+     */
     public DeleteProduct() {
         setTitle("Delete Product");
         setSize(500, 200);
@@ -39,9 +45,5 @@ public class DeleteProduct extends JFrame {
 
         setContentPane(mainPanel);
         setVisible(true);
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new DeleteProduct());
     }
 }

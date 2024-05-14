@@ -1,17 +1,22 @@
 package org.ordersmgmtapp.ui.models.client;
 
 import org.ordersmgmtapp.controller.ClientController;
-import org.ordersmgmtapp.dao.ClientDAO;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * The DeleteClient class represents the UI for deleting a client.
+ */
 public class DeleteClient extends JFrame {
     private JTextField id;
     private JButton delete;
 
+    /**
+     * Constructs a new DeleteClient object.
+     */
     public DeleteClient() {
         setTitle("Delete Client");
         setSize(500, 200);
@@ -39,9 +44,5 @@ public class DeleteClient extends JFrame {
 
         setContentPane(mainPanel);
         setVisible(true);
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new DeleteClient());
     }
 }

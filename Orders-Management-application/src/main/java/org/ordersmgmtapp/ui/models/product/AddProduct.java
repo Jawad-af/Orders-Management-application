@@ -6,12 +6,18 @@ import javax.swing.*;
 import java.awt.*;
 import java.sql.SQLException;
 
+/**
+ * The AddProduct class represents the UI for adding a new product.
+ */
 public class AddProduct extends JFrame {
 
     private ProductController controller = new ProductController();
     private JTextField name, description, price, stock;
     private JButton addButton;
 
+    /**
+     * Constructs a new AddProduct object.
+     */
     public AddProduct() {
         setTitle("Add New product");
         setSize(500, 500);
@@ -44,6 +50,10 @@ public class AddProduct extends JFrame {
 
         add(panel);
     }
+
+    /**
+     * Adds the product to the database.
+     */
     private void addproduct() {
         String productName = name.getText();
         String productDescription = description.getText();

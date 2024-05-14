@@ -13,10 +13,16 @@ import java.awt.event.ActionListener;
 import java.lang.reflect.Field;
 import java.util.List;
 
+/**
+ * The ClientManagementFrame class represents the user interface for managing clients.
+ */
 public class ClientManagementFrame extends JFrame {
     private JTable clientTable;
     private JButton addClientButton, modifyClientButton, deleteClientButton;
 
+    /**
+     * Constructs a new ClientManagementFrame object.
+     */
     public ClientManagementFrame() {
         setTitle("Client Management");
         setSize(400, 300);
@@ -62,6 +68,10 @@ public class ClientManagementFrame extends JFrame {
         });
     }
 
+    /**
+     * Updates the client list displayed in the table.
+     * @param clients The list of clients to display.
+     */
     public void updateClientList(List<Client> clients) {
         Class<Client> clientClass = Client.class;
         Field[] clientFields = clientClass.getDeclaredFields();

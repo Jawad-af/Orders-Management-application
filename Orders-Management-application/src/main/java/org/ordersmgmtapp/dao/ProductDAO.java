@@ -8,10 +8,20 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.ordersmgmtapp.dbconnection.DatabaseConnectionManager.connection;
+import static org.ordersmgmtapp.databaseobjects.DatabaseConnectionManager.connection;
 
+/**
+ * The ProductDAO class provides methods to interact with product data in the database.
+ */
 public class ProductDAO implements ProductDAORepo{
 
+    /**
+     * Adds a new product to the database.
+     * @param name The name of the product.
+     * @param description The description of the product.
+     * @param price The price of the product.
+     * @param stock The stock quantity of the product.
+     */
     @Override
     public void addProduct(String name, String description, double price, int stock) {
         String ADD_NEW_PRODUCT = "INSERT INTO product(name, description, price, stock_quantity) VALUES(?, ?, ?, ?)";
@@ -33,6 +43,10 @@ public class ProductDAO implements ProductDAORepo{
         }
     }
 
+    /**
+     * Modifies an existing product in the database.
+     * @param product The product object containing the modified data.
+     */
     @Override
     public void modifyProduct(Product product) {
         String MODIFY_PRODUCT = "UPDATE product SET name = ?, description = ?, price = ? WHERE id = ?";
@@ -53,6 +67,10 @@ public class ProductDAO implements ProductDAORepo{
         }
     }
 
+    /**
+     * Deletes a product from the database.
+     * @param id The ID of the product to be deleted.
+     */
     @Override
     public void deleteProduct(long id) {
         String DELETE_PRODUCT = "DELETE FROM product WHERE id = ?";
@@ -70,6 +88,11 @@ public class ProductDAO implements ProductDAORepo{
         }
     }
 
+    /**
+     * Retrieves a product from the database by its ID.
+     * @param productId The ID of the product to retrieve.
+     * @return The Product object representing the retrieved product.
+     */
     @Override
     public Product getProductById(long productId) {
         String RETRIEVE_CLIENT_BY_ID = "SELECT * FROM product WHERE id = ?";
@@ -92,6 +115,10 @@ public class ProductDAO implements ProductDAORepo{
         return null;
     }
 
+    /**
+     * Retrieves all products from the database.
+     * @return A list of Product objects representing all products in the database.
+     */
     @Override
     public List<Product> getAllProducts() {
         List<Product> products = new ArrayList<>();
@@ -114,6 +141,11 @@ public class ProductDAO implements ProductDAORepo{
         return products;
     }
 
+    /**
+     * Decrements the stock quantity of a product in the database.
+     * @param product The product object whose stock quantity is to be decremented.
+     * @param quantity The quantity by which to decrement the stock.
+     */
     @Override
     public void decrementStock(Product product, int quantity) {
         String DECREMENT_STOCK_QUANTITY = "UPDATE product SET stock_quantity = ? WHERE id = ?";

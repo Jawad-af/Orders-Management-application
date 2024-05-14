@@ -11,10 +11,16 @@ import java.awt.*;
 import java.lang.reflect.Field;
 import java.util.List;
 
+/**
+ * The ProductManagementFrame class represents the user interface for managing products.
+ */
 public class ProductManagementFrame extends JFrame {
     private JTable productTable;
     private JButton addProductButton, modifyProductButton, deleteProductButton;
 
+    /**
+     * Constructs a new ProductManagementFrame object.
+     */
     public ProductManagementFrame() {
         setTitle("Product Management");
         setSize(600, 600);
@@ -53,6 +59,10 @@ public class ProductManagementFrame extends JFrame {
         });
     }
 
+    /**
+     * Updates the product list in the UI.
+     * @param products The list of products to display.
+     */
     public void updateProductList(List<Product> products) {
         Class<Product> productClass = Product.class;
         Field[] fields = productClass.getDeclaredFields();

@@ -8,16 +8,23 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.ordersmgmtapp.dbconnection.DatabaseConnectionManager.connection;
+import static org.ordersmgmtapp.databaseobjects.DatabaseConnectionManager.connection;
 
-public class ClientDAO implements ClientDAORepo{
+/**
+ * The ClientDAO class provides methods to interact with the database for client-related operations.
+ */
+public class ClientDAO implements ClientDAORepo {
 
+    /**
+     * Adds a new client to the database.
+     *
+     * @param client The client object to add.
+     */
     @Override
     public void add(Client client) {
         String INSERT_CLIENT_SQL = "INSERT INTO client(name, age) VALUES (?, ?);";
-        PreparedStatement preparedStatement = null;
         try {
-            preparedStatement = connection.prepareStatement(INSERT_CLIENT_SQL);
+            PreparedStatement preparedStatement = connection.prepareStatement(INSERT_CLIENT_SQL);
             preparedStatement.setString(1, client.getName());
             preparedStatement.setInt(2, client.getAge());
 
@@ -32,12 +39,16 @@ public class ClientDAO implements ClientDAORepo{
         }
     }
 
+    /**
+     * Deletes a client from the database based on the client's ID.
+     *
+     * @param clientId The ID of the client to delete.
+     */
     @Override
     public void delete(long clientId) {
         String DELETE_CLIENT = "DELETE FROM client WHERE id = ?";
-        PreparedStatement preparedStatement = null;
         try {
-            preparedStatement = connection.prepareStatement(DELETE_CLIENT);
+            PreparedStatement preparedStatement = connection.prepareStatement(DELETE_CLIENT);
             preparedStatement.setLong(1, clientId);
             int rows = preparedStatement.executeUpdate();
             if (rows > 0) {
@@ -50,8 +61,13 @@ public class ClientDAO implements ClientDAORepo{
         }
     }
 
+    /**
+     * Updates the information of a client in the database.
+     *
+     * @param client The updated client object.
+     */
     @Override
-    public void update(Client client)  {
+    public void update(Client client) {
         String UPDATE_CLIENT = "UPDATE client SET name = ?, age = ? WHERE id = ?";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_CLIENT);
@@ -69,13 +85,17 @@ public class ClientDAO implements ClientDAORepo{
         }
     }
 
+    /**
+     * Retrieves a list of all clients from the database.
+     *
+     * @return A list of all clients.
+     */
     @Override
     public List<Client> getAll() {
         List<Client> clients = new ArrayList<>();
         String RETRIEVE_ALL_CLIENTS = "SELECT * FROM client;";
-        PreparedStatement preparedStatement = null;
         try {
-            preparedStatement = connection.prepareStatement(RETRIEVE_ALL_CLIENTS);
+            PreparedStatement preparedStatement = connection.prepareStatement(RETRIEVE_ALL_CLIENTS);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 long id = resultSet.getLong("id");
@@ -90,13 +110,18 @@ public class ClientDAO implements ClientDAORepo{
         return clients;
     }
 
+    /**
+     * Retrieves a client from the database based on the client's ID.
+     *
+     * @param id The ID of the client to retrieve.
+     * @return The client object.
+     */
     @Override
     public Client getClientById(long id) {
         Client client = new Client();
         String RETRIEVE_CLIENT_BY_ID = "SELECT * FROM CLIENT WHERE CLIENT.ID = ?";
-        PreparedStatement preparedStatement = null;
         try {
-            preparedStatement = connection.prepareStatement(RETRIEVE_CLIENT_BY_ID);
+            PreparedStatement preparedStatement = connection.prepareStatement(RETRIEVE_CLIENT_BY_ID);
             preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {

@@ -1,7 +1,6 @@
 package org.ordersmgmtapp.ui.models.product;
 
 import org.ordersmgmtapp.controller.ProductController;
-import org.ordersmgmtapp.dao.ProductDAO;
 import org.ordersmgmtapp.model.Product;
 
 import javax.swing.*;
@@ -9,11 +8,17 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * The ModifyProduct class represents the UI for modifying a product.
+ */
 public class ModifyProduct extends JFrame {
 
     private JTextField id;
     private JButton modify;
 
+    /**
+     * Constructs a new ModifyProduct object.
+     */
     public ModifyProduct() {
         setTitle("Modify Product");
         setSize(500, 500);
@@ -33,10 +38,8 @@ public class ModifyProduct extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 long productId = Long.parseLong(id.getText());
-                ProductDAO productDAO = new ProductDAO();
                 ProductController controller = new ProductController();
-                Product product;
-                product = controller.getProductById(productId);
+                Product product = controller.getProductById(productId);
 
                 JTextField nameField, descriptionField, priceField;
                 JButton saveButton;
@@ -60,11 +63,11 @@ public class ModifyProduct extends JFrame {
                 saveButton.addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        // Get updated name and age
+                        // Get updated name, description, and price
                         String updatedName = nameField.getText();
                         String updatedDescription = descriptionField.getText();
                         double updatedPrice = Double.parseDouble(priceField.getText());
-                        // Update the Product in the database
+                        // Update the product
                         product.setName(updatedName);
                         product.setDescription(updatedDescription);
                         product.setPrice(updatedPrice);
@@ -81,9 +84,5 @@ public class ModifyProduct extends JFrame {
 
         setContentPane(mainPanel);
         setVisible(true);
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new ModifyProduct());
     }
 }

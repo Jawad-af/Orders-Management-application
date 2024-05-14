@@ -1,7 +1,6 @@
 package org.ordersmgmtapp.ui.models.client;
 
 import org.ordersmgmtapp.controller.ClientController;
-import org.ordersmgmtapp.dao.ClientDAO;
 import org.ordersmgmtapp.model.Client;
 
 import javax.swing.*;
@@ -9,11 +8,17 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * The ModifyClient class represents the UI for modifying a client.
+ */
 public class ModifyClient extends JFrame {
 
     private JTextField id;
     private JButton modify;
 
+    /**
+     * Constructs a new ModifyClient object.
+     */
     public ModifyClient() {
         setTitle("Modify Client");
         setSize(500, 500);
@@ -76,9 +81,5 @@ public class ModifyClient extends JFrame {
 
         setContentPane(mainPanel);
         setVisible(true);
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new ModifyClient());
     }
 }
